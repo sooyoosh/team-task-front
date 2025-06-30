@@ -1,0 +1,27 @@
+<p-card [header]="'Welcome'+' '+user.fullName" class="text-center">
+    <div class="text-center image-wrapper" (mouseenter)="showIcons = true" (mouseleave)="showIcons = false">
+
+        <img class="profile-image" [src]="user.profileImageUrl?user.profileImageUrl:'../../../assets/profile-user.jpg'"
+            alt="">
+
+        <div class="icon-overlay" *ngIf="showIcons">
+            <i class="pi pi-camera" (click)="this.uploadDialog=true"></i>
+        </div>
+    </div>
+</p-card>
+
+<p-dialog header="Upload Image Profile" [modal]="true" [(visible)]="uploadDialog" [style]="{ width: '39rem' }">
+    <div class="card flex justify-content-center mt-2">
+    <p-fileUpload 
+        customUpload="true"
+        chooseLabel="Choose" 
+        chooseIcon="pi pi-upload"
+        name="demo[]"
+        [multiple]="true" 
+        accept="image/*" 
+        maxFileSize="1000000" 
+        (onSelect)="onSelected($event)"
+        (uploadHandler)="uploadHandler()" />
+</div>
+</p-dialog>
+

@@ -1,0 +1,73 @@
+<div class="container"></div>
+
+    <div class=" min-h-full w-full" [@formTransition]="isRegister" style="position: relative;">
+      @if (isRegister) {
+            <div class=" w-7 min-h-full ml-auto mr-auto" style="padding-top: 220px;">
+                <p-card header="Register">
+                    <div class="flex flex-column" [formGroup]="registerForm">
+                        
+        
+                        <label for="fullname" class="mb-2">Fullname <small style="color: red;">*</small></label>
+                        <input pInputText id="fullname" type="text" class="mb-2" formControlName="fullName" />
+                        <small style="color: red;"
+                            *ngIf="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.errors?.['required']">
+                            insert your fullname
+                        </small>
+    
+    
+                        <label for="email" class="mb-2 mt-2">Email <small style="color: red;">*</small></label>
+                        <input pInputText id="email" type="email" class="mb-2" formControlName="email" />
+                        <small style="color: red;"
+                            *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['email']">
+                            email incorrect
+                        </small>
+                        <small style="color: red;"
+                            *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['required']">
+                            insert your email
+                        </small>
+        
+                        <label for="password" class="mb-2 mt-2">Password <small style="color: red;">*</small></label>
+                        <input pInputText id="password" type="password" class="mb-2" formControlName="password" />
+                         <small style="color: red;"
+                            *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['required']">
+                            insert your password
+                        </small> 
+        
+                        <p-button label="Register" [raised]="true" class="mt-4" icon="pi pi-verified"
+                             [disabled]="registerForm.invalid" (onClick)="register()" />
+                            <a class="mt-2 cursor-pointer" (click)="this.isRegister=false">you have already account? click here</a>
+                    </div>
+                </p-card>
+            </div>
+        }@else {
+            <div class=" w-7 min-h-full ml-auto mr-auto" style="padding-top: 220px;">
+                <p-card header="login">
+                    <div class="flex flex-column"[formGroup]="loginForm">
+    
+                        <label for="email" class="mb-2">Email <small style="color: red;">*</small></label>
+                        <input pInputText id="email" type="email" class="mb-2" formControlName="email" />
+                        <small style="color: red;"
+                            *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['email']">
+                            email incorrect
+                        </small>
+                        <small style="color: red;"
+                            *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']">
+                            insert your email
+                        </small>
+    
+                        <label for="password" class="mb-2 mt-2">Password <small style="color: red;">*</small></label>
+                        <input pInputText id="password" type="password" class="mb-2" formControlName="password" />
+                        <small style="color: red;"
+                            *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']">
+                            insert your password
+                        </small> 
+    
+                        <p-button label="Login" [raised]="true" class="mt-4" icon="pi pi-user"
+                             [disabled]="loginForm.invalid" (onClick)="login()" />
+                            <a class="mt-2 cursor-pointer" (click)="this.isRegister=true">you havent already account? click here</a>
+                    </div>
+                </p-card>
+            </div>
+        }
+    </div>
+

@@ -10,6 +10,8 @@
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "noImplicitAny": false,
+    "strictPropertyInitialization": false,
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
