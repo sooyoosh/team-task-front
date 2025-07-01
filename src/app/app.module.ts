@@ -21,6 +21,10 @@ import { loadingInterceptor } from './interceptors/loading.interceptor';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
+import { TableModule } from 'primeng/table';
+
+
+
 
 @NgModule({
   declarations: [
@@ -42,7 +46,9 @@ import { FileUploadModule } from 'primeng/fileupload';
     MessagesModule,
     ProgressSpinnerModule,
     DialogModule,
-    FileUploadModule
+    FileUploadModule,
+    TableModule,
+    ReactiveFormsModule
   ],
   providers: [MessageService,provideHttpClient(withInterceptors([authInterceptor,loadingInterceptor]))],
   bootstrap: [AppComponent]

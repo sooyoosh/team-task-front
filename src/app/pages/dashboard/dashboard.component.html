@@ -12,16 +12,92 @@
 
 <p-dialog header="Upload Image Profile" [modal]="true" [(visible)]="uploadDialog" [style]="{ width: '39rem' }">
     <div class="card flex justify-content-center mt-2">
-    <p-fileUpload 
-        customUpload="true"
-        chooseLabel="Choose" 
-        chooseIcon="pi pi-upload"
-        name="demo[]"
-        [multiple]="true" 
-        accept="image/*" 
-        maxFileSize="1000000" 
-        (onSelect)="onSelected($event)"
-        (uploadHandler)="uploadHandler()" />
-</div>
+        <p-fileUpload customUpload="true" chooseLabel="Choose" chooseIcon="pi pi-upload" name="demo[]" [multiple]="true"
+            accept="image/*" maxFileSize="1000000" (onSelect)="onSelected($event)" (uploadHandler)="uploadHandler()" />
+    </div>
 </p-dialog>
+<div class="grid mt-2">
 
+    <div class="col-6">
+        <p-card header="owner teams">
+            <div class="h-4rem">
+                <p-button label="َCreate" (onClick)="createDialog=true" icon="pi pi-plus-circle" [rounded]="true"
+                    severity="success" />
+            </div>
+
+            <p-table [value]="user.ownedTeams" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>OwnerName</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.ownerFullName }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-card>
+    </div>
+
+    <div class="col-6">
+        <p-card header="your teams">
+            <div class="h-4rem">
+
+            </div>
+            <p-table [value]="user.teams" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>OwnerName</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.ownerFullName }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-card>
+    </div>
+
+
+
+
+</div>
+
+
+
+<!-- create team dialog -->
+<p-dialog header="Create Your Team" [modal]="true" [(visible)]="createDialog" [style]="{ width: '39rem' }">
+    <div class="flex flex-column" [formGroup]="createTeamForm">
+        <label for="name" class="mb-2">Name<small style="color: red;">*</small></label>
+        <input pInputText id="name" type="text" class="mb-2" formControlName="name" />
+        <small style="color: red;"
+            *ngIf="createTeamForm.get('name')?.touched && createTeamForm.get('name')?.errors?.['required']">
+            insert your team's name
+        </small>
+
+        <label for="description" class="mb-2 mt-2">Description<small style="color: red;">*</small></label>
+        <input pInputText id="description" type="text" class="mb-2" formControlName="description" />
+        <small style="color: red;"
+            *ngIf="createTeamForm.get('description')?.touched && createTeamForm.get('description')?.errors?.['required']">
+            insert your team's description
+        </small>
+
+
+        <p-button label="Create" [raised]="true"
+         class="mt-4" icon="pi pi-verified" 
+         [disabled]="createTeamForm.invalid" (onClick)="createTeam()" />
+
+    </div>
+
+
+</p-dialog>

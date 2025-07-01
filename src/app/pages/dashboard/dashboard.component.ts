@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { UserService } from '../../services/user.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,8 +12,19 @@ export class DashboardComponent implements OnInit {
   user:any;
   showIcons=false;
   uploadDialog:boolean=false
+  createDialog:boolean=false
   fileToUpload: any;
-  constructor(private messageService: MessageService,private userService:UserService){}
+  createTeamForm:FormGroup;
+  constructor(private messageService: MessageService,
+    private userService:UserService,private fb:FormBuilder){
+
+      //create team form
+      this.createTeamForm=this.fb.group({
+        name:[null,[Validators.required]],
+        description:[null,[Validators.required]],
+      })
+
+    }
   
   
   ngOnInit() {
@@ -43,5 +55,8 @@ export class DashboardComponent implements OnInit {
           this.messageService.add({ key: 'toast1', severity: 'error', summary: err.error, detail: '' })
         }
       })
+  }
+  createTeam(){
+    
   }
 }
