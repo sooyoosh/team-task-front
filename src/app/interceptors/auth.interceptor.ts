@@ -1,6 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  
   const user=localStorage.getItem('user')
   const userOb=user? JSON.parse(user):null
   const token=userOb? userOb.token:null

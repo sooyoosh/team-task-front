@@ -1,7 +1,7 @@
-<p-card [header]="'Welcome'+' '+user.fullName" class="text-center">
+<p-card [header]="'Welcome'+' '+user?.fullName" class="text-center">
     <div class="text-center image-wrapper" (mouseenter)="showIcons = true" (mouseleave)="showIcons = false">
 
-        <img class="profile-image" [src]="user.profileImageUrl?user.profileImageUrl:'../../../assets/profile-user.jpg'"
+        <img class="profile-image" [src]="user?.profileImageUrl?user?.profileImageUrl:'../../../assets/profile-user.jpg'"
             alt="">
 
         <div class="icon-overlay" *ngIf="showIcons">
@@ -25,12 +25,13 @@
                     severity="success" />
             </div>
 
-            <p-table [value]="user.ownedTeams" [tableStyle]="{ 'min-width': '50rem' }">
+            <p-table [value]="user?.ownedTeams" [tableStyle]="{ 'min-width': '50rem' }">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
                         <th>OwnerName</th>
+                        <th>Manage</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-item>
@@ -38,6 +39,12 @@
                         <td>{{ item.name }}</td>
                         <td>{{ item.description }}</td>
                         <td>{{ item.ownerFullName }}</td>
+                        <td>
+                            <p-button severity="warning" (onClick)="openUpdateDialog(item)"
+                            [raised]="true" class="mr-1" icon="pi pi-pencil" />
+                            <p-button severity="danger" (onClick)="confirm2($event,item.id)"
+                            [raised]="true" icon="pi pi-trash" />
+                        </td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -49,7 +56,7 @@
             <div class="h-4rem">
 
             </div>
-            <p-table [value]="user.teams" [tableStyle]="{ 'min-width': '50rem' }">
+            <p-table [value]="user?.teams" [tableStyle]="{ 'min-width': '50rem' }">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Name</th>
@@ -76,7 +83,7 @@
 
 
 <!-- create team dialog -->
-<p-dialog header="Create Your Team" [modal]="true" [(visible)]="createDialog" [style]="{ width: '39rem' }">
+<p-dialog header="Create Your Team" (onHide)="createTeamForm.reset()" [modal]="true" [(visible)]="createDialog" [style]="{ width: '39rem' }">
     <div class="flex flex-column" [formGroup]="createTeamForm">
         <label for="name" class="mb-2">Name<small style="color: red;">*</small></label>
         <input pInputText id="name" type="text" class="mb-2" formControlName="name" />
@@ -93,11 +100,37 @@
         </small>
 
 
-        <p-button label="Create" [raised]="true"
-         class="mt-4" icon="pi pi-verified" 
-         [disabled]="createTeamForm.invalid" (onClick)="createTeam()" />
+        <p-button label="Create" [raised]="true" class="mt-4" icon="pi pi-verified" [disabled]="createTeamForm.invalid"
+            (onClick)="createTeam()" />
 
     </div>
 
 
 </p-dialog>
+<!-- create team dialog -->
+<!-- update team dialog -->
+ <p-dialog header="Update Your Team"  [modal]="true" [(visible)]="updateDialog" [style]="{ width: '39rem' }">
+    <div class="flex flex-column" [formGroup]="updateTeamForm">
+        <label for="name" class="mb-2">Name<small style="color: red;">*</small></label>
+        <input pInputText id="name" type="text" class="mb-2" formControlName="name" />
+        <small style="color: red;"
+            *ngIf="updateTeamForm.get('name')?.touched && updateTeamForm.get('name')?.errors?.['required']">
+            insert your team's name
+        </small>
+
+        <label for="description" class="mb-2 mt-2">Description<small style="color: red;">*</small></label>
+        <input pInputText id="description" type="text" class="mb-2" formControlName="description" />
+        <small style="color: red;"
+            *ngIf="updateTeamForm.get('description')?.touched && updateTeamForm.get('description')?.errors?.['required']">
+            insert your team's description
+        </small>
+
+
+        <p-button severity="warning" (onClick)="updateTeam()" label="Update" [raised]="true" class="mt-4" icon="pi pi-verified" [disabled]="updateTeamForm.invalid" />
+
+    </div>
+
+
+</p-dialog>
+<!-- update team dialog -->
+ <p-confirmDialog />

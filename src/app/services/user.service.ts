@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +14,7 @@ export class UserService {
    return this.http.post(environment.apiBaseUrl+'upload-profile-image',file);
   }
 
-
+  getUserById(){
+    return this.http.get(environment.apiBaseUrl+'getUserById');
+  }
 }

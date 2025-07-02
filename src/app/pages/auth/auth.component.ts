@@ -50,7 +50,7 @@ export class AuthComponent implements OnInit {
 
 
   ngOnInit() {
-
+    localStorage.removeItem('user');
   }
 
 
@@ -58,6 +58,7 @@ export class AuthComponent implements OnInit {
     this.authService.Register(this.registerForm.value).subscribe({
       next: (user) => {
         localStorage.setItem('user', JSON.stringify(user));
+        this.authService.isLogedIn.set(true);
         this.router.navigate(['/dashboard'])
       },
       error: (err) => {
@@ -71,6 +72,7 @@ export class AuthComponent implements OnInit {
     this.authService.Login(this.loginForm.value).subscribe({
       next: (user) => {
         localStorage.setItem('user', JSON.stringify(user));
+        this.authService.isLogedIn.set(true);
         this.router.navigate(['/dashboard'])
       },
       error: (err) => {

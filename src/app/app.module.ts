@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './pages/auth/auth.component';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ReactiveFormsModule } from '@angular/forms';
 
 //
@@ -22,7 +22,7 @@ import { authInterceptor } from './interceptors/auth.interceptor';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 
@@ -48,9 +48,10 @@ import { TableModule } from 'primeng/table';
     DialogModule,
     FileUploadModule,
     TableModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ConfirmDialogModule
   ],
-  providers: [MessageService,provideHttpClient(withInterceptors([authInterceptor,loadingInterceptor]))],
+  providers: [MessageService,ConfirmationService,provideHttpClient(withInterceptors([authInterceptor,loadingInterceptor]))],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
