@@ -32,6 +32,7 @@
                         <th>Description</th>
                         <th>OwnerName</th>
                         <th>Manage</th>
+                        <th>Detail</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-item>
@@ -44,6 +45,10 @@
                             [raised]="true" class="mr-1" icon="pi pi-pencil" />
                             <p-button severity="danger" (onClick)="confirm2($event,item.id)"
                             [raised]="true" icon="pi pi-trash" />
+                        </td>
+                        <td>
+                            <p-button severity="info" (onClick)="goToTeam(item)"
+                                [raised]="true" class="ml-1" icon="pi pi-receipt" />
                         </td>
                     </tr>
                 </ng-template>

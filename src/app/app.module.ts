@@ -23,15 +23,17 @@ import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
-
+import { TeamComponent } from './pages/team/team.component';
+import { FieldsetModule } from 'primeng/fieldset';
+import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     DashboardComponent,
-    LoadingComponent
+    LoadingComponent,
+    TeamComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     FileUploadModule,
     TableModule,
     ReactiveFormsModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    FieldsetModule,
+    AvatarModule
   ],
   providers: [MessageService,ConfirmationService,provideHttpClient(withInterceptors([authInterceptor,loadingInterceptor]))],
   bootstrap: [AppComponent]

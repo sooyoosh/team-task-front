@@ -3,6 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { UserService } from '../../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TeamService } from '../../services/team.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +21,7 @@ export class DashboardComponent implements OnInit {
   updateTeamForm: FormGroup;
   teamIdToUpdate: any;
   constructor(private messageService: MessageService,
-    private userService: UserService, private fb: FormBuilder, 
+    private userService: UserService, private fb: FormBuilder,private router:Router, 
     private teamService: TeamService,private confirmationService: ConfirmationService) {
 
     //create team form
@@ -139,7 +140,9 @@ export class DashboardComponent implements OnInit {
         });
     }
 
-
+    goToTeam(item){
+      this.router.navigate([`team/${item.id}`])
+    }
 
 
 }

@@ -21,5 +21,8 @@ export class TeamService {
     return this.http.delete(environment.apiBaseUrl+`team/delete/${id}`);
   }
 
+  GetTeamDetails(id){
+    return this.http.get(environment.apiBaseUrl+`team/${id}`)
+  }
 
 }
