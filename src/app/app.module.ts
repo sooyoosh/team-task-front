@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //
 import { CardModule } from 'primeng/card';
@@ -26,6 +26,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TeamComponent } from './pages/team/team.component';
 import { FieldsetModule } from 'primeng/fieldset';
 import { AvatarModule } from 'primeng/avatar';
+import { DataViewModule } from 'primeng/dataview';
+import { ScrollerModule } from 'primeng/scroller';
+import { DropdownModule } from 'primeng/dropdown';
+
 
 @NgModule({
   declarations: [
@@ -53,7 +57,11 @@ import { AvatarModule } from 'primeng/avatar';
     ReactiveFormsModule,
     ConfirmDialogModule,
     FieldsetModule,
-    AvatarModule
+    AvatarModule,
+    DataViewModule,
+    ScrollerModule,
+    FormsModule,
+    DropdownModule    
   ],
   providers: [MessageService,ConfirmationService,provideHttpClient(withInterceptors([authInterceptor,loadingInterceptor]))],
   bootstrap: [AppComponent]

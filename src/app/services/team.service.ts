@@ -24,5 +24,8 @@ export class TeamService {
   GetTeamDetails(id){
     return this.http.get(environment.apiBaseUrl+`team/${id}`)
   }
+  InviteUser(teamId,invitedUserId){
+    return this.http.get(environment.apiBaseUrl+`team/inviteUser/${teamId}/${invitedUserId}`)
+  }
 
 }

@@ -1,16 +1,81 @@
 <div class="card p-3">
-<p-fieldset>
-<ng-template pTemplate="header">
-    <div class="flex align-items-center gap-2 px-2">
-        <p-avatar 
-            image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" 
-            shape="circle" />
-        <span class="font-bold">Amy Elsner</span>
-    </div>
-</ng-template>
-<p class="m-0">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</p>
-</p-fieldset>
+    <p-fieldset>
+        <ng-template pTemplate="header">
+            <div class="flex align-items-center gap-2 px-2">
+                <p-avatar image="../../../assets/team-logo-ideas-v0-q6wvrjtwy9cd1.webp" shape="circle" />
+                <span class="font-bold">{{team?.name}}</span>
+            </div>
+        </ng-template>
+        <div class="grid">
+            <div class="col-6">
+
+                <h3 class="m-0">
+                    owner: {{team?.ownerFullName}}
+                </h3>
+                <p class="mt-2">
+                    {{team?.description}}
+                </p>
+                <div class="card flex flex-column justify-content-center">
+                    <h3>members:</h3>
+                    @if (this.members?.length) {
+
+                    <p-scroller [items]="this.members" [itemSize]="50" scrollHeight="200px"
+                        styleClass="border-1 surface-border" [style]="{'width': '200px', 'height': '200px'}">
+                        <ng-template pTemplate="item" let-item let-options="options">
+                            <div class="flex align-items-center p-2" [ngClass]="{ 'surface-ground': options.odd }"
+                                style="height: 50px;">
+                                {{ item }}
+                            </div>
+                        </ng-template>
+                    </p-scroller>
+                    <p-button label="َAdd new" (onClick)="invitionDialog=true" class="mt-2" icon="pi pi-plus-circle"
+                        [rounded]="true" severity="success" />
+                    }@else {
+                    your team has no member! yet!!
+                    <p-button label="َAdd member" (onClick)="invitionDialog=true" class="mt-2" icon="pi pi-plus-circle"
+                        [rounded]="true" severity="success" />
+                    }
+                </div>
+            </div>
+            <div class="col-6">
+                <h3></h3>
+            </div>
+        </div>
+    </p-fieldset>
 </div>
+
+<p-dialog header="Invite Member" [modal]="true" [(visible)]="invitionDialog"
+    [style]="{ width: '39rem',height:'22rem' }">
+
+    <div class="card flex justify-content-center">
+        <p-dropdown [options]="users" [(ngModel)]="selectedUsers" optionLabel="name" [filter]="true" filterBy="name"
+            [showClear]="true" placeholder="Select a User" styleClass="w-30rem">
+            <ng-template pTemplate="filter" let-options="options">
+                <div class="flex gap-1">
+                    <div class="p-inputgroup" (click)="$event.stopPropagation()">
+                        <span class="p-inputgroup-addon"><i class="pi pi-search"></i></span>
+                        <input type="text" pInputText placeholder="Filter" [(ngModel)]="filterValue"
+                            (keyup)="customFilterFunction($event, options)" />
+                    </div>
+                    <button pButton icon="pi pi-times" (click)="resetFunction(options)"></button>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="selectedItem" let-selectedOption>
+                <div class="flex align-items-center gap-2">
+                    <img [src]="selectedOption.profileImageUrl" style="width: 28px" />
+                    <div>{{ selectedOption.fullName }}</div>
+                </div>
+            </ng-template>
+            <ng-template let-user pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                    <img [src]="user.profileImageUrl" style="width: 28px" />
+                    <div>{{ user.fullName }}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+    </div>
+    <div class="mt-7 flex justify-content-center">
+        <p-button label="َAdd new" [disabled]="!selectedUsers" (onClick)="inviteUser()" icon="pi pi-plus-circle" [rounded]="true"
+            severity="success" />
+    </div>
+</p-dialog>

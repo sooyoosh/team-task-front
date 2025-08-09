@@ -17,4 +17,7 @@ export class UserService {
   getUserById(){
     return this.http.get(environment.apiBaseUrl+'getUserById');
   }
+  getAllUser(){
+    return this.http.get(environment.apiBaseUrl+'getAllUser');
+  }
 }
