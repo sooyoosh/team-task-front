@@ -27,5 +27,7 @@ export class TeamService {
   InviteUser(teamId,invitedUserId){
     return this.http.get(environment.apiBaseUrl+`team/inviteUser/${teamId}/${invitedUserId}`)
   }
-
+  GetPendingInvitationsForUser(){
+    return this.http.get(environment.apiBaseUrl+`team/invitations/pending`)
+  }
 }

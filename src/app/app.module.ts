@@ -29,7 +29,8 @@ import { AvatarModule } from 'primeng/avatar';
 import { DataViewModule } from 'primeng/dataview';
 import { ScrollerModule } from 'primeng/scroller';
 import { DropdownModule } from 'primeng/dropdown';
-
+import { AvatarGroupModule } from 'primeng/avatargroup';
+import { BadgeModule } from 'primeng/badge';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,9 @@ import { DropdownModule } from 'primeng/dropdown';
     DataViewModule,
     ScrollerModule,
     FormsModule,
-    DropdownModule    
+    DropdownModule,
+    AvatarGroupModule,
+    BadgeModule
   ],
   providers: [MessageService,ConfirmationService,provideHttpClient(withInterceptors([authInterceptor,loadingInterceptor]))],
   bootstrap: [AppComponent]

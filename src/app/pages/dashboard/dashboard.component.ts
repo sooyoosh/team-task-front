@@ -20,6 +20,8 @@ export class DashboardComponent implements OnInit {
   createTeamForm: FormGroup;
   updateTeamForm: FormGroup;
   teamIdToUpdate: any;
+  invitionRequest:any;
+  invitionDialog: boolean = false;
   constructor(private messageService: MessageService,
     private userService: UserService, private fb: FormBuilder,private router:Router, 
     private teamService: TeamService,private confirmationService: ConfirmationService) {
@@ -41,7 +43,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.getUserById();
     this.messageService.add({ key: 'toast1', severity: 'success', summary: 'welcome', detail: '' })
-
+    this.getPendingInvitationsForUser()
   }
   getUser() {
     const userstring = localStorage.getItem('user');
@@ -144,5 +146,11 @@ export class DashboardComponent implements OnInit {
       this.router.navigate([`team/${item.id}`])
     }
 
-
+    getPendingInvitationsForUser(){
+      this.teamService.GetPendingInvitationsForUser().subscribe((data)=>{
+        debugger
+        this.invitionRequest=data
+      })
+    }
+    
 }

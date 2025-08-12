@@ -1,6 +1,18 @@
-<p-card [header]="'Welcome'+' '+user?.fullName" class="text-center">
-    <div class="text-center image-wrapper" (mouseenter)="showIcons = true" (mouseleave)="showIcons = false">
+<div (click)="invitionDialog=true" style="cursor: pointer;" class="p-3">
+    <p-avatar 
+    pBadge 
+    [value]="invitionRequest?invitionRequest.length:'0'" 
+    [image]="user?.profileImageUrl ? user.profileImageUrl : '../../../assets/profile-user.jpg'"  
+    size="xlarge"
+    badgeSize="large"  
+    class="avatar-right">
+    </p-avatar>
+    <!-- <small class="avatar-right font-bold mt-6">invition requset</small> -->
+</div>
+<p-card class="text-center">
 
+    <div class="text-center image-wrapper" (mouseenter)="showIcons = true" (mouseleave)="showIcons = false">
+        <h2>{{'Welcome'+' '+user?.fullName}}</h2>
         <img class="profile-image" [src]="user?.profileImageUrl?user?.profileImageUrl:'../../../assets/profile-user.jpg'"
             alt="">
 
@@ -139,3 +151,20 @@
 </p-dialog>
 <!-- update team dialog -->
  <p-confirmDialog />
+ <!-- invition dialog -->
+  <p-dialog header="Invitation Request" [modal]="true" [(visible)]="invitionDialog" [style]="{ width: '39rem' }">
+        <p-card >
+            @for (item of invitionRequest; track $index) {
+                <div class="card">
+                    <h3>{{item.teamName + ' '+ 'invited you!!'}}</h3>
+                    <p>{{'ownerName :'+' '+item.invitedBy}}</p>
+                    <p>{{item.invitedAt|date:'yyyy/MM/dd'}}</p>
+                </div>
+                <div class="mt-4">
+                    <p-button icon="pi pi-check" [rounded]="true" [outlined]="true" class="mr-2"/>
+                    <p-button icon="pi pi-times" [rounded]="true" severity="danger" [outlined]="true" />
+                </div>
+            }
+        </p-card>
+   
+</p-dialog>
