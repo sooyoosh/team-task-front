@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, model } from '@angular/core';
 import { environment } from '../../environments/environment';
 
@@ -24,10 +24,16 @@ export class TeamService {
   GetTeamDetails(id){
     return this.http.get(environment.apiBaseUrl+`team/${id}`)
   }
-  InviteUser(teamId,invitedUserId){
-    return this.http.get(environment.apiBaseUrl+`team/inviteUser/${teamId}/${invitedUserId}`)
+  InviteUser(teamId,invitedUserId,roleId){
+    return this.http.get(environment.apiBaseUrl+`team/inviteUser/${teamId}/${invitedUserId}/${roleId}`)
   }
   GetPendingInvitationsForUser(){
     return this.http.get(environment.apiBaseUrl+`team/invitations/pending`)
+  }
+  RespondToInvitation(invitionId,accept:boolean){
+    let model={}
+    let params=new HttpParams();
+    params=params.append('accept',accept.toString().toLocaleLowerCase())
+    return this.http.post(environment.apiBaseUrl+`team/respond/${invitionId}`,model,{params})
   }
 }

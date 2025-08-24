@@ -22,6 +22,11 @@ export class DashboardComponent implements OnInit {
   teamIdToUpdate: any;
   invitionRequest:any;
   invitionDialog: boolean = false;
+  roleMap: { [key: number]: string } = {
+  0: 'Member',
+  1: 'Admin',
+  2: 'Viewer'
+};
   constructor(private messageService: MessageService,
     private userService: UserService, private fb: FormBuilder,private router:Router, 
     private teamService: TeamService,private confirmationService: ConfirmationService) {
@@ -148,9 +153,19 @@ export class DashboardComponent implements OnInit {
 
     getPendingInvitationsForUser(){
       this.teamService.GetPendingInvitationsForUser().subscribe((data)=>{
-        debugger
         this.invitionRequest=data
       })
     }
-    
+    respondToInvition(invitionId,accept){
+      this.teamService.RespondToInvitation(invitionId,accept).subscribe((data)=>{
+        this.invitionDialog=false;
+        this.getPendingInvitationsForUser();
+        this.getUserById();
+        this.messageService.add({ key: 'toast1', severity: 'success', summary: 'success!!'  })
+      },
+    (err)=>{
+      this.messageService.add({ key: 'toast1', severity: 'error', summary: 'fail'  })
+    }  
+    )
+    }    
 }

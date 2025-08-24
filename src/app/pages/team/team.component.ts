@@ -15,10 +15,18 @@ export class TeamComponent implements OnInit {
   teamId: number;
   team: any;
   users: any;
-  members: any;
+  members: any[];
   invitionDialog: boolean = false;
   selectedUsers: any;
   filterValue: any;
+  searchUser:any;
+  membersAll: any;
+  roles=[
+    {lable:'Viewer',roleId:0},
+    {lable:'Member',roleId:1},
+    {lable:'Admin',roleId:2}
+  ]
+  selectedRoles:any;
   constructor(private route: ActivatedRoute,
     private teamService: TeamService, private userService: UserService,private messageService: MessageService,) {
 
@@ -38,6 +46,7 @@ export class TeamComponent implements OnInit {
         debugger
         this.team = data
         this.members = data['members'];
+        this.membersAll = data['members'];
       },
       error: (err) => {
 
@@ -63,7 +72,7 @@ export class TeamComponent implements OnInit {
   }
 
   inviteUser(){
-    this.teamService.InviteUser(this.teamId,this.selectedUsers['id']).subscribe((data)=>{
+    this.teamService.InviteUser(this.teamId,this.selectedUsers['id'],this.selectedRoles).subscribe((data)=>{
       this.invitionDialog=false;
       this.selectedUsers=null
       this.filterValue = '';
@@ -75,5 +84,17 @@ export class TeamComponent implements OnInit {
       this.selectedUsers=null
       this.filterValue = '';
   })
+  }
+  searchingUser(){
+    if(this.searchUser?.length) {
+      this.members=this.membersAll.filter(m=>  m.fullName.toLowerCase().includes(this.searchUser.toLocaleLowerCase()));
+      if(!this.members.length) this.members=[{fullName:'nothing!!'}]
+    }else{
+      this.members=this.membersAll
+    }
+  }
+  resetInvite(){
+    this.selectedRoles=null;
+    this.selectedUsers=null
   }
 }

@@ -17,14 +17,20 @@
                 </p>
                 <div class="card flex flex-column justify-content-center">
                     <h3>members:</h3>
-                    @if (this.members?.length) {
+                    @if (this.membersAll?.length) {
+                    
+                        <div class="flex mb-2">
+                            <input type="text" pInputText [(ngModel)]="searchUser"/>
+                            <p-button icon="pi pi-search" (onClick)="searchingUser()"/>
+                        </div>
 
                     <p-scroller [items]="this.members" [itemSize]="50" scrollHeight="200px"
-                        styleClass="border-1 surface-border" [style]="{'width': '200px', 'height': '200px'}">
+                        styleClass="border-1 surface-border" [style]="{'width': '300px', 'height': '200px','border-radius':'10px'}">
                         <ng-template pTemplate="item" let-item let-options="options">
-                            <div class="flex align-items-center p-2" [ngClass]="{ 'surface-ground': options.odd }"
+                            <div class="flex align-items-center p-2 font-bold"
+                                [ngClass]="{'nothing-item': item.fullName === 'nothing!!','surface-ground': options.odd}"
                                 style="height: 50px;">
-                                {{ item }}
+                                {{ item.fullName }}
                             </div>
                         </ng-template>
                     </p-scroller>
@@ -44,7 +50,7 @@
     </p-fieldset>
 </div>
 
-<p-dialog header="Invite Member" [modal]="true" [(visible)]="invitionDialog"
+<p-dialog header="Invite Member" [modal]="true" [(visible)]="invitionDialog" (onHide)="resetInvite()"
     [style]="{ width: '39rem',height:'22rem' }">
 
     <div class="card flex justify-content-center">
@@ -74,8 +80,17 @@
             </ng-template>
         </p-dropdown>
     </div>
+    <div class=" flex justify-content-center mt-2">
+    <p-dropdown 
+        styleClass="w-30rem"
+        [options]="roles" 
+        [(ngModel)]="selectedRoles" 
+        optionLabel="lable"
+        optionValue="roleId" 
+        placeholder="Select a Role" />
+    </div>
     <div class="mt-7 flex justify-content-center">
-        <p-button label="َAdd new" [disabled]="!selectedUsers" (onClick)="inviteUser()" icon="pi pi-plus-circle" [rounded]="true"
+        <p-button label="َAdd new" [disabled]="!selectedUsers || !selectedRoles" (onClick)="inviteUser()" icon="pi pi-plus-circle" [rounded]="true"
             severity="success" />
     </div>
 </p-dialog>
